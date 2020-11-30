@@ -36,13 +36,33 @@ public class AccountController {
     // ){
     //     System.out.println(fname + " "+ lname);
     //     view.addAttribute("name", fname + " " + lname);
-    //     //TODO: Add the fname and lname to a SQL database
         
     //     return "accountPage";
     // }
     @GetMapping(path="/")
-    public ModelAndView showPage(){
-        return new ModelAndView("greetingView");
+    public ModelAndView homePage(
+        // @RequestParam String firstName,
+        // @RequestParam String lastName,
+        // Model view
+    ){
+        // view.addAttribute("name", firstName + " " + lastName);
+        
+        return new ModelAndView("home");
+    }
+
+    @GetMapping(path="/login")
+    public ModelAndView loginPage(){
+        return new ModelAndView("login");
+    }
+
+    @GetMapping(path="/register")
+    public ModelAndView registrationPage(){
+        return new ModelAndView("register");
+    }
+
+    @GetMapping(path="/edit")
+    public ModelAndView editPage(){
+        return new ModelAndView("edit");
     }
 
     //Adds a new user to the SQL database  
@@ -51,6 +71,8 @@ public class AccountController {
     public ModelAndView addNewUser (
         @RequestParam String firstName,
         @RequestParam String lastName,
+        @RequestParam String email,
+        @RequestParam String password,
         Model view
     ){
         System.out.println(firstName + " "+ lastName);
@@ -58,10 +80,12 @@ public class AccountController {
         User n = new User();
         n.setFirstName(firstName);
         n.setLastName(lastName);
+        n.setEmail(email);
+        n.setPassword(password);
         UserRepository.save(n);
 
         view.addAttribute("name", firstName + " " + lastName);
-        return new ModelAndView("accountPage");   
+        return new ModelAndView("accountVerification");   
     }
 
     //Returns a list of all users
@@ -78,7 +102,11 @@ public class AccountController {
         return UserRepository.findById(id);
     }
 
-    
+    // @GetMapping(path="/userName")
+    // public @ResponseBody Optional<User> getUsername(@RequestParam String firstName){
+     
+    //     return UserRepository.findByName(firstName);
+    // }
 
 
 

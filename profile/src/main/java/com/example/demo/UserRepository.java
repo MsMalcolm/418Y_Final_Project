@@ -1,6 +1,8 @@
 package com.example.demo;
 // package com.example.accessingdatamysql;
 
+// import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 // import com.example.accessingdatamysql.User;
 
@@ -8,5 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 // CRUD refers Create, Read, Update, Delete
 
 public interface UserRepository extends CrudRepository<User, Integer> {
+
+	// Optional<User> findByName(String firstName);
 
 }
