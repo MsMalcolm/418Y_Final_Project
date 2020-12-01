@@ -69,12 +69,23 @@
     <section class="container-fluid">
         <section class="row justify-content-center">
             <section class="col-12 col-sm-6 col-md-4">
-                <form class="form-container" action="/findUser" method="POST">
+                <form class="form-container" action="/profile" method="POST">
+                    
+                    <p th:text="${accountError}"/> 
+                    
+                    <!-- Form Inputs -->
+                    <p th:text="${emailError}"/> 
                     <label>Email:</label><br>
-                    <input class="form-control" type="text" id="email" name="email" placeholder="Enter your email"><br>
+                    <input class="form-control" required type="email" id="email" name="email" placeholder="Enter your email"><br>
+                    
+                    <p th:text="${passwordError}"/>
                     <label>Password:</label><br>
-                    <input class="form-control"type="password" id="password" name="password" placeholder="Enter your password"><br><br>
+                    <input class="form-control" required minlength="6" type="password" id="password" name="password" placeholder="Enter your password"><br><br>
+                    
+                    <!-- Submit Button -->
                     <input class="btn btn-light btn-block" type="submit" value="Submit"><br>
+                    
+                    <!-- Link to the registration page -->
                     <p class="text-center">Don't have an account? <a href="/register" style="color: white;">Sign up here</a></p>
                 </form>
             </div> 

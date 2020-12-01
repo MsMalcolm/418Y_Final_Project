@@ -1,6 +1,8 @@
 package com.example.demo;
 // package com.example.accessingdatamysql;
 
+import java.util.List;
+
 // import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
@@ -11,6 +13,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
 
-	// Optional<User> findByName(String firstName);
-
+	List<User> findByEmail(String email);
+	List<User> findByPassword(String password);
 }

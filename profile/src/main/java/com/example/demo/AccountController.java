@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,66 +18,56 @@ public class AccountController {
     @Autowired
     private UserRepository UserRepository;
 
-    // Greets the user with a message "Hello, name"
-    // @GetMapping("/")
-    // public String greet(@RequestParam(name="name", required = false, defaultValue = "Sign in")
-    //     String name, Model view
-    // ){
-    //     String s = new String("Hello, " + name);
-    //     view.addAttribute("renderText", s);
-    //     return "greetingView";
-    // }
+    //Id of the currently logged in user
+    private Integer userID = -1;
 
-    //Gets info from login form and displays the users name
-    // @PostMapping("/profile")
-    // public String saveUserInfo(
-    //     @RequestParam(name = "fname", required = true) String fname,
-    //     @RequestParam(name = "lname", required = true) String lname,
-    //     Model view
-    // ){
-    //     System.out.println(fname + " "+ lname);
-    //     view.addAttribute("name", fname + " " + lname);
+    //Sets the default name on the homepage to Guest User
+    //If a user logs in it displays that users name
+    @GetMapping(path = "/")
+    public ModelAndView homePage(Model view) {
         
-    //     return "accountPage";
-    // }
-    @GetMapping(path="/")
-    public ModelAndView homePage(
-        // @RequestParam String firstName,
-        // @RequestParam String lastName,
-        // Model view
-    ){
-        // view.addAttribute("name", firstName + " " + lastName);
-        
+        List<User> users = (List<User>) getAllUsers();
+
+        if(userID == -1)
+            view.addAttribute("name", "Guest User");
+        else{
+            String firstName = users.get(userID).getFirstName().toString();
+            String lastName = users.get(userID).getLastName().toString();
+            view.addAttribute("name", firstName + " " + lastName);
+        }
         return new ModelAndView("home");
     }
 
-    @GetMapping(path="/login")
-    public ModelAndView loginPage(){
+    // Links to the login page: localhost:8080/login
+    @GetMapping(path = "/login")
+    public ModelAndView loginPage() {
         return new ModelAndView("login");
     }
 
-    @GetMapping(path="/register")
-    public ModelAndView registrationPage(){
+    // Links to the register page: localhost:8080/register
+    @GetMapping(path = "/register")
+    public ModelAndView registrationPage() {
         return new ModelAndView("register");
     }
 
-    @GetMapping(path="/edit")
-    public ModelAndView editPage(){
+    // Links to the edit page: localhost:8080/edit
+    @GetMapping(path = "/edit")
+    public ModelAndView editPage() {
         return new ModelAndView("edit");
     }
 
-    //Adds a new user to the SQL database  
-    //and takes them to their account page
-    @RequestMapping(path="/add")
-    public ModelAndView addNewUser (
-        @RequestParam String firstName,
+    // Adds a new user to the SQL database
+    // and takes them to their account page
+    @RequestMapping(path = "/add")
+    public ModelAndView addNewUser(
+        @RequestParam String firstName, 
         @RequestParam String lastName,
         @RequestParam String email,
-        @RequestParam String password,
+        @RequestParam String password, 
         Model view
     ){
-        System.out.println(firstName + " "+ lastName);
-        
+        System.out.println(firstName + " " + lastName);
+
         User n = new User();
         n.setFirstName(firstName);
         n.setLastName(lastName);
@@ -85,29 +76,66 @@ public class AccountController {
         UserRepository.save(n);
 
         view.addAttribute("name", firstName + " " + lastName);
-        return new ModelAndView("accountVerification");   
+        return new ModelAndView("accountVerification");
     }
 
-    //Returns a list of all users
-    @GetMapping(path="/all")
-    public @ResponseBody Iterable<User> getAllUsers(){
+    // Returns a list of all users
+    @GetMapping(path = "/all")
+    public @ResponseBody Iterable<User> getAllUsers() {
 
         return UserRepository.findAll();
     }
 
-    //Searhes for a user by their id and returns that user
-    @GetMapping(path="/user")
-    public @ResponseBody Optional<User> getOneUser(@RequestParam Integer id){
-     
+    // Searhes for a user by their id and returns that user
+    @GetMapping(path = "/user")
+    public @ResponseBody Optional<User> getOneUser(@RequestParam Integer id) {
+
         return UserRepository.findById(id);
     }
 
-    // @GetMapping(path="/userName")
-    // public @ResponseBody Optional<User> getUsername(@RequestParam String firstName){
-     
-    //     return UserRepository.findByName(firstName);
-    // }
+    //Connected to the login in form
+    @RequestMapping(path = "/profile")
+    public ModelAndView findUser(
+        @RequestParam String email,
+        @RequestParam String password,
+        Model view
+    ){
+        List<User> users = (List<User>) getAllUsers();
 
+        Boolean emailFound = false;
+        Boolean passwordFound = false;
 
+        //Checks if the inputted email and password exists in the database
+        //Returns user back to the home page with their information
+        for(int i = 0; i < users.size(); i++){
+            
+            if(email.equals(users.get(i).getEmail().toString())){
+                emailFound = true;
 
+                if(password.equals(users.get(i).getPassword().toString())){
+                    passwordFound = true;
+
+                    String firstName = users.get(i).getFirstName().toString();
+                    String lastName = users.get(i).getLastName().toString();
+                    
+                    userID = i;
+
+                    view.addAttribute("name", firstName + " " + lastName);
+
+                    return new ModelAndView("home");
+                }
+            }        
+        }
+        
+        //Returns user back to the login page with an error message  
+        //if their information was not found.
+        if((emailFound == false) && (passwordFound == false))
+            view.addAttribute("accountError", "Account not found.");
+        else if(emailFound == false)
+            view.addAttribute("emailError", "Email was not found.");
+        else if(passwordFound == false)
+            view.addAttribute("passwordError", "Incorrect password.");
+        
+        return new ModelAndView("login");        
+    }
 }

@@ -26,7 +26,17 @@
             /* Downloaded image from: https://pixabay.com/illustrations/box-background-random-white-1472804/ */
             background-image: url("bgImg(1920x1080).png");
         }
+        .sign-out-btn{display: none;}
     </style>
+
+    <!-- If account is logged in... -->
+    <script>
+        $(document).ready(function(){
+            $(".biography").click(function(){
+            $(".biography").hide();
+            });
+        });
+    </script>
 </head>
 <body>
     <!-- Taken from: https://getbootstrap.com/docs/4.2/components/navbar/ -->
@@ -54,6 +64,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="/login">Login</a>
                     <a class="dropdown-item" href="/register">Register</a>
+                    <a class="dropdown-item sign-out-btn">Sign Out</a>
                 </div>
             </li>
             </ul>
@@ -68,11 +79,10 @@
             </div>
             <!-- Biography -->
             <div class="col col-xl-8" style="margin-top: 20px;">
-                <h2 class="name">Guest Name</h2>
+                <h2 th:text="${name}" /> 
                 <p class="biography" style="padding-top: 10px;">Introduce yourself by writing something in the bio section!</p>
             </div>
         </div> 
     </div>
-    <!-- <h3 class="m-3" th:text="'Welcome to your profile ' + ${name} + '!'"/>   -->
 </body>
 </html>

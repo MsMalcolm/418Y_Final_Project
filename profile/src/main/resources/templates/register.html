@@ -12,9 +12,10 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    
+
     <!-- Custom CSS style sheet -->
     <style>
+        body{background-image: url("bgImg(1920x1080).png");}
         .form-container{
             background: rgb(192, 129, 129);;
             padding: 25px;
@@ -22,12 +23,7 @@
             border: 2px solid black;
             box-shadow: 0px 0px 10px 0px #000;
         }
-        body{
-            background-image: url("bgImg(1920x1080).png");
-        }
-        .heading{
-            text-shadow: 2px 2px 4px #fff;
-        }
+        .heading{text-shadow: 2px 2px 4px #fff;}
     </style>
 </head>
 <body>
@@ -64,19 +60,29 @@
 
     <h1 class="m-4 text-center heading">Sign Up</h1>
 
+    <!-- A centered registration form -->
     <section class="container-fluid">
         <section class="row justify-content-center">
             <section class="col-12 col-sm-6 col-md-5">
-                <form class="form-container" action="/add" method="POST">
+                <form id="registration-form" class="form-container" action="/add" method="POST">
+                    
+                    <!-- Form Inputs -->
                     <label>First name:</label><br>
-                    <input class="form-control" type="text" id="firstName" name="firstName" placeholder="Enter your first name"><br>
+                    <input class="form-control" required minlength="1" type="text" id="firstName" name="firstName" placeholder="Enter your first name"><br>
+                    
                     <label>Last name:</label><br>
-                    <input class="form-control" type="text" id="lastName" name="lastName" placeholder="Enter your last name"><br>
+                    <input class="form-control" required minlength="1" type="text" id="lastName" name="lastName" placeholder="Enter your last name"><br>
+                    
                     <label>Email:</label><br>
-                    <input class="form-control" type="text" id="email" name="email" placeholder="Enter your email"><br>
+                    <input class="form-control" required type="email" id="email" name="email" placeholder="Enter your email"><br>
+                    
                     <label>Password:</label><br>
-                    <input class="form-control" type="password" id="password" name="password" placeholder="Enter a password"><br><br>
+                    <input class="form-control" required minlength="6" type="password" id="password" name="password" placeholder="Enter a password"><br><br>
+                    
+                    <!-- Submit Button -->
                     <input class="btn btn-light btn-block" type="submit" value="Submit"><br>
+                    
+                    <!-- Link to the login page -->
                     <p class="text-center">Already have an account? <a href="/login" style="color: white;">Log in here</a></p>
                 </form>
             </section>
