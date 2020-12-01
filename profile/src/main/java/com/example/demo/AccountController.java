@@ -52,7 +52,17 @@ public class AccountController {
 
     // Links to the edit page: localhost:8080/edit
     @GetMapping(path = "/edit")
-    public ModelAndView editPage() {
+    public ModelAndView editPage(Model view) {
+        List<User> users = (List<User>) getAllUsers();
+
+        if(userID == -1)
+            view.addAttribute("name", "Guest User");
+        else{
+            String firstName = users.get(userID).getFirstName().toString();
+            String lastName = users.get(userID).getLastName().toString();
+            view.addAttribute("name", firstName + " " + lastName);
+        }
+
         return new ModelAndView("edit");
     }
 
@@ -138,4 +148,13 @@ public class AccountController {
         
         return new ModelAndView("login");        
     }
+
+    // Links to the login page: localhost:8080/login
+    @GetMapping(path = "/signout")
+    public ModelAndView signoutUser(){
+        userID = -1;
+
+        return new ModelAndView("signout");
+    }
+    
 }
