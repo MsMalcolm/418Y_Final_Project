@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Sign Out</title>
+    <title>Error!</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF=8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -12,6 +12,16 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Custom CSS -->
+    <style>
+        body{background-color: rgb(65, 65, 65); color: white;}
+        .instructions{font-size: 20px;}
+        .submitBtn{background: rgb(192, 129, 129);}
+        .biography{padding: 10px; min-width: 730px; min-height: 150px; border: 1px solid black;}
+        .name{padding: 10px; width: 730px; margin-bottom: 20px; border: 1px solid black; font-size: 30px;}
+        .profilePicture{border-radius: 2%; border-style: solid;}
+    </style>
 </head>
 <body>
     <!-- Taken from: https://getbootstrap.com/docs/4.2/components/navbar/ -->
@@ -37,13 +47,15 @@
                     Account
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="/login">Login</a>
-                    <a class="dropdown-item" href="/register">Register</a>
+                    <a class="dropdown-item" id="login-link" href="/login">Login</a>
+                    <a class="dropdown-item" id="register-link" href="/register">Register</a>
+                    <a class="dropdown-item" id="signout-link" href="/signout">Sign Out</a>
                 </div>
             </li>
             </ul>
         </div>
     </nav>
-    <h3 class="m-4">User successfully logged out.</h3>
+    <h2>Error!</h2>
+    <p class="m-3" th:text="${errorMsg}" />            
 </body>
 </html>

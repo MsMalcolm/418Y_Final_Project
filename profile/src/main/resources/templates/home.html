@@ -32,12 +32,14 @@
     <!-- JS functions -->
     <script>
         
-        // Hides the login and register button if a user is logged in 
+        // Hides the login and register button if a user is logged in
+        // The edit tab in nav will also be disabled. 
         $(document).ready(function(){
             var name = document.getElementById("userName").textContent;
             var login = document.getElementById("login-link");
             var register = document.getElementById("register-link");
             var signout = document.getElementById("signout-link");
+            var edit = document.getElementById("edit-link");
 
             if(name != "Guest User"){
                 login.style.display = "none";
@@ -65,7 +67,7 @@
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/edit">Edit</a>
+                <a id="edit-link" class="nav-link" href="/edit">Edit</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -75,7 +77,6 @@
                     <a class="dropdown-item" id="login-link" href="/login">Login</a>
                     <a class="dropdown-item" id="register-link" href="/register">Register</a>
                     <a class="dropdown-item" id="signout-link" href="/signout">Sign Out</a>
-                    
                 </div>
             </li>
             </ul>
@@ -86,12 +87,13 @@
         <div class="row no gutters">
             <!-- Profile picture -->
             <div class="col">
-                <img th:src="@{/prof_pic.png}" width="300" height="300" style="border-radius: 2%; border-style: solid;">
+                <!-- <img th:src="@{/prof_pic.png}" width="300" height="300" style="border-radius: 2%; border-style: solid;"> -->
+                <img th:src="${imgSrc}" width="300" height="300" style="border-radius: 2%; border-style: solid;">
             </div>
             <!-- Biography -->
             <div class="col col-xl-8" style="margin-top: 20px;">
                 <h2 id="userName" th:text="${name}" /> 
-                <p class="biography" style="padding-top: 10px;">Introduce yourself by writing something in the bio section!</p>
+                <p class="biography" style="padding-top: 10px;" th:text="${biography}"></p>
             </div>
         </div> 
     </div>

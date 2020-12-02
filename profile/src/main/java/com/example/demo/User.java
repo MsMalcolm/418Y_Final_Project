@@ -15,6 +15,8 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+    private String biography;
+    private String picture;
 
     public Integer getId() {
         return id;
@@ -54,6 +56,22 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getBiography() {
+        return biography;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 }
 
