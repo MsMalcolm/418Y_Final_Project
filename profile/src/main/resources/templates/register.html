@@ -61,11 +61,13 @@
     <h1 class="m-4 text-center heading">Sign Up</h1>
 
     <!-- A centered registration form -->
-    <section class="container-fluid">
+    <section class="container-fluid" style="margin-bottom: 30px;">
         <section class="row justify-content-center">
             <section class="col-12 col-sm-6 col-md-5">
                 <form id="registration-form" class="form-container" action="/add" method="POST">
-                    
+                    <!-- Error Message -->
+                    <p th:text="${accountError}"/>
+
                     <!-- Form Inputs -->
                     <label>First name:</label><br>
                     <input class="form-control" required minlength="1" type="text" id="firstName" name="firstName" placeholder="Enter your first name"><br>

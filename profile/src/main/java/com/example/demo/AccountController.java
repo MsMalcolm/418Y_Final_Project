@@ -94,6 +94,8 @@ public class AccountController {
     public ModelAndView editPage(Model view) {
         List<User> users = (List<User>) getAllUsers();
 
+        //If no user is logged in, display default values on the edit page
+        //Else display their info on the edit page
         if(userID == -1){
             view.addAttribute("firstname", "Guest");
             view.addAttribute("lastname", "User");
@@ -125,6 +127,13 @@ public class AccountController {
         Model view
     ){
         
+        //Checks if the account exists before adding a new user.
+        if(UserRepository.findByEmail(email) != null) {
+            System.out.println("New user can't be made");
+            view.addAttribute("accountError", "The email already exists. Try logging in");
+            return new ModelAndView("register");
+        }
+
         User n = new User();
         n.setFirstName(firstName);
         n.setLastName(lastName);
